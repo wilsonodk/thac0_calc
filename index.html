@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-hit AC 0</title>
+
+    <link rel="stylesheet" type="text/javascript" href="public/app.css" />
+
+    <script type="text/javascript" src="public/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="public/riot.js"></script>
+    <script type="text/javascript" src="public/data.js"></script>
+
+    <script type="text/template" id="pcTitleTmpl">
+        <div class="clearer"></div>
+        <h2>{name}</h2>
+    </script>
+
+    <script type="text/template" id="targetTmpl">
+        <div class="target" id="{id}">
+            <h3>Target {num}</h3>
+
+            <p>THAC0: {thac0}</p>
+
+            <p class="row">
+                <label>Real AC</label>
+                <br><select class="ac"></select>
+                <input type="checkbox" class="shield" /> <label>Using shield?</label>
+            </p>
+
+
+            <p class="row"><label>Weapon</label><br><select class="weapon"></select></p>
+            
+            <p class="row"><label>Armor Modifier</label><br><select class="armor"></select></p>
+
+            <p>Roll: <span></span></p>
+        </div>
+    </script>
+
+    <script type="text/template" id="weaponOptionTmpl">
+        <option value="{name}">{name}</option>
+    </script>
+
+    <script type="text/template" id="armorOptionTmpl">
+        <option value="{ac}">{armor}</option>
+    </script>
+</head>
+<body>
+    <h1>To-hit AC 0</h1>
+    <script type="text/javascript" src="public/app.js"></script>
+</body>
+</html>
