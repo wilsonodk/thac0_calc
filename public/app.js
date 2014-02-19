@@ -89,12 +89,12 @@
 
     }
 
-    /* 
+    /*
      * Modules
      */
 
     api(function appSetupModule(app) {
-        
+
         app.on('load', function appLoadHandler(view) {
 
             var id;
@@ -148,7 +148,7 @@
                 }));
             });
 
-            // Create the armor select field 
+            // Create the armor select field
             ele = $('#' + view.id + ' select.armor');
             $.each(data.armor, function (key, val) {
                 ele.append($.render(templates.armorOption, {
@@ -197,7 +197,7 @@
             'Josiah': {
                 'thac0': 16 - 4,
                 'weapons': ['Bastard sword', 'Long sword']
-            }, 
+            },
             'Bull': {
                 'thac0': 18,
                 'weapons': ['Flail']
@@ -205,5 +205,5 @@
         }
     });
 
-    
-}(jQuery, window.thac0_data, true));
+
+}(jQuery, window.thac0_data, window.location.toString().indexOf('localhost') !== -1));
