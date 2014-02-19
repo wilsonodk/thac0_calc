@@ -21,6 +21,20 @@
         }
     }
 
+    function getWeaponBonus(player, weaponName) {
+
+        var bonus = 0;
+
+        $.each(player.weapons, function getWeaponBonusEach(idx, weaponObj) {
+            if (weaponObj.name === weaponName) {
+                bonus = weaponObj.bonus;
+                return false;
+            }
+        });
+
+        return bonus;
+    }
+
     // Event handlers
 
     function getThac0Event(app, player) {
@@ -132,27 +146,27 @@
 
             // Create the AC select field
             ele = $('#' + view.id + ' select.ac');
-            $.each(data.ac, function (key, val) {
+            $.each(data.ac, function (key, armorAc) {
                 ele.append($.render(templates.armorOption, {
                     armor: key,
-                    ac: val
+                    ac: armorAc
                 }));
             });
 
 
             // Create the weapon select field
             ele = $('#' + view.id + ' select.weapon');
-            $.each(view.player.weapons, function (idx, val) {
+            $.each(view.player.weapons, function (idx, weapon) {
                 ele.append($.render(templates.weaponOption, {
-                    name: val
+                    name: weapon.name
                 }));
             });
 
             // Create the armor select field
             ele = $('#' + view.id + ' select.armor');
-            $.each(data.armor, function (key, val) {
+            $.each(data.armor, function (key, armorAc) {
                 ele.append($.render(templates.armorOption, {
-                    ac: val,
+                    ac: armorAc,
                     armor: key
                 }));
             });
@@ -169,22 +183,22 @@
 
         app.on('load:change', function changeLoadHandler(parent, player) {
 
-            var thac0   = player.thac0,
-                weapon  = parent.find('select.weapon').val(),
-                shield  = parent.find('input.shield').is(':checked') ? 1 : 0,
-                ac      = Number(parent.find('select.ac').val()) - shield,
-                armor   = parent.find('select.armor option:selected').text(),
-                tar     = parent.find('span'),
-                mod     = Number(data.weapon[weapon][armor]),
-                modstr  = (mod >= 0 ? ' + ' : ' ' ),
+            var thac0    = player.thac0,
+                weapon   = parent.find('select.weapon').val(),
+                shield   = parent.find('input.shield').is(':checked') ? 1 : 0,
+                ac       = Number(parent.find('select.ac').val()) - shield,
+                armor    = parent.find('select.armor option:selected').text(),
+                tar      = parent.find('span'),
+                modThac0 = thac0 - player.bonus - getWeaponBonus(player, weapon),
+                mod      = Number(data.weapon[weapon][armor]),
+                modstr   = (mod >= 0 ? ' + ' : ' ' ),
                 roll;
 
-            debug('THAC0(%s) AC(%s %s) Modifier(%s)', thac0, ac, shield, mod);
+            debug('THAC0(%s %s) AC(%s %s) Modifier(%s)', thac0, modThac0, ac, shield, mod);
 
-            roll = thac0 - (ac + mod);
+            roll = modThac0 - (ac + mod);
 
-            tar.text(roll + ' = ' + thac0 + ' - (' + ac + modstr + mod + ')');
-            //tar.text(roll);
+            tar.text(roll + ' = ' + modThac0 + ' - (' + ac + modstr + mod + ')');
 
         });
     });
@@ -195,12 +209,22 @@
         root: $('body'),
         names: {
             'Josiah': {
-                'thac0': 16 - 4,
-                'weapons': ['Bastard sword', 'Long sword']
+                'thac0': 16,
+                'bonus': 1,
+                'weapons': [
+                    { name: '2h Bastard sword', bonus: 3 },
+                    { name: '1h Bastard sword', bonus: 3 },
+                    { name: 'Flail', bonus: 1 },
+                ]
             },
             'Bull': {
                 'thac0': 18,
-                'weapons': ['Flail']
+                'bonus': 0,
+                'weapons': [
+                    { name: 'Flail', bonus: 0 },
+                    { name: 'Hammer', bonus: 0 },
+                    { name: 'Mace', bonus: 0 }
+                ]
             }
         }
     });
