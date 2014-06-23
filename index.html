@@ -8,6 +8,7 @@
     <script type="text/javascript" src="public/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="public/riot.js"></script>
     <script type="text/javascript" src="public/data.js"></script>
+    <script type="text/javascript" src="public/player.js"></script>
 
     <script type="text/template" id="pcTitleTmpl">
         <div class="clearer"></div>
@@ -26,9 +27,8 @@
                 <input type="checkbox" class="shield" /> <label>Using shield?</label>
             </p>
 
-
             <p class="row"><label>Weapon</label><br><select class="weapon"></select></p>
-            
+
             <p class="row"><label>Armor Modifier</label><br><select class="armor"></select></p>
 
             <p>Roll: <span></span></p>
@@ -36,7 +36,7 @@
     </script>
 
     <script type="text/template" id="weaponOptionTmpl">
-        <option value="{name}">{name}</option>
+        <option value="{type}">{name}</option>
     </script>
 
     <script type="text/template" id="armorOptionTmpl">

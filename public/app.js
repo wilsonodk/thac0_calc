@@ -1,4 +1,4 @@
-(function ($, data, debugMode) {
+(function ($, data, playerData, debugMode) {
 
     var api,
         instance,
@@ -26,7 +26,7 @@
         var bonus = 0;
 
         $.each(player.weapons, function getWeaponBonusEach(idx, weaponObj) {
-            if (weaponObj.name === weaponName) {
+            if (weaponObj.type === weaponName) {
                 bonus = weaponObj.bonus;
                 return false;
             }
@@ -158,7 +158,8 @@
             ele = $('#' + view.id + ' select.weapon');
             $.each(view.player.weapons, function (idx, weapon) {
                 ele.append($.render(templates.weaponOption, {
-                    name: weapon.name
+                    name: weapon.name,
+                    type: weapon.type
                 }));
             });
 
@@ -207,27 +208,8 @@
         type: 'app',
         targets: 3,
         root: $('body'),
-        names: {
-            'Josiah': {
-                'thac0': 16,
-                'bonus': 1,
-                'weapons': [
-                    { name: '2h Bastard sword', bonus: 3 },
-                    { name: '1h Bastard sword', bonus: 3 },
-                    { name: 'Flail', bonus: 1 },
-                ]
-            },
-            'Bull': {
-                'thac0': 18,
-                'bonus': 0,
-                'weapons': [
-                    { name: 'Flail', bonus: 0 },
-                    { name: 'Hammer', bonus: 0 },
-                    { name: 'Mace', bonus: 0 }
-                ]
-            }
-        }
+        names: playerData
     });
 
 
-}(jQuery, window.thac0_data, window.location.toString().indexOf('localhost') !== -1));
+}(jQuery, window.thac0_data, window.player_data, window.location.toString().indexOf('localhost') !== -1));
