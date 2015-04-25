@@ -124,7 +124,8 @@
                     app.root.append($.render(templates.target, {
                         num: i,
                         id: id,
-                        thac0: val.thac0
+                        thac0: val.thac0,
+                        numAtt: val.numAtt
                     }));
 
                     app.trigger('load:select', {name: key, num: i, id: id, player: val});
